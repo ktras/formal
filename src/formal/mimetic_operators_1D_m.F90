@@ -36,6 +36,10 @@ module mimetic_operators_1D_m
 
   end interface
 
+  ! PURPOSE: Definition of type to encapsulate a one-dimenstional (1D) mimetic gradient operator matrix.
+  ! KEYWORDS: type definition, 1D gradient operator matrix
+  ! CONTEXT: Use this type to assemble gradient-operator matrix for printing.
+
   type, extends(mimetic_matrix_1D_t) :: gradient_operator_1D_t
     !! Encapsulate a 1D mimetic gradient operator
     private
@@ -48,8 +52,13 @@ module mimetic_operators_1D_m
     generic :: assemble => assemble_gradient
     procedure, non_overridable, private :: assemble_gradient
   end type
+  ! END CODE CHUNK
 
   interface gradient_operator_1D_t
+
+    ! PURPOSE: Interface for procedure to construct a new mimetic gradient-operator matrix representation of kth order for 1D cells of width dx.
+    ! KEYWORDS: 1D, gradient-operator constructor, sparse matrix
+    ! CONTEXT: Use this function to construct a sparse-matrix represntation of a mimetic gradient operator.
 
     pure module function construct_1D_gradient_operator(k, dx, cells) result(gradient_operator_1D)
       !! Construct a mimetic gradient operator
@@ -59,8 +68,13 @@ module mimetic_operators_1D_m
       integer, intent(in) :: cells !! number of grid cells
       type(gradient_operator_1D_t) gradient_operator_1D
     end function
+    ! END CODE CHUNK
 
   end interface
+
+  ! PURPOSE: Interface for procedure to encapsulate a 1D mimetic divergence operator matrix.
+  ! KEYWORDS: 1D, divergence operator, sparse matrix
+  ! CONTEXT: Use this type to assemble divergence-operator matrix for printing.
 
   type, extends(mimetic_matrix_1D_t) :: divergence_operator_1D_t
     !! Encapsulate kth-order mimetic divergence operator on m_ cells of width dx
@@ -74,8 +88,13 @@ module mimetic_operators_1D_m
     procedure, non_overridable, private :: assemble_divergence
     procedure, non_overridable :: submatrix_A_rows
   end type
+  ! END CODE CHUNK
 
   interface divergence_operator_1D_t
+
+    ! PURPOSE: Interface for procedure to construct an object representing a 1D mimetic divergence operator.
+    ! KEYWORDS: 1D, divergence operator, sparse matrix, constructor
+    ! CONTEXT: Use this type to assemble a divergence-operator matrix for printing.
 
     pure module function construct_1D_divergence_operator(k, dx, cells) result(divergence_operator_1D)
       !! Construct a mimetic gradient operator
@@ -85,6 +104,7 @@ module mimetic_operators_1D_m
       integer, intent(in) :: cells !! number of grid cells
       type(divergence_operator_1D_t) divergence_operator_1D
     end function
+    ! END CODE CHUNK
 
   end interface
 

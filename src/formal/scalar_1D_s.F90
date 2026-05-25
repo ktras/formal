@@ -23,6 +23,12 @@ contains
 
 #ifndef __GFORTRAN__
 
+  ! PURPOSE: Definition of procedure to construct a new scalar_1D_t object by assigning each argument to a corresponding
+  !          corresponding component of the new object.
+  ! KEYWORDS: 1D scalar field constructor
+  ! CONTEXT: Invoke this constructor with a pointer associated with a function to be sampled at a set
+  !          of uniformly-spaced cell centers along one spatial dimension bounded by x_min and x_max.
+
   module procedure construct_1D_scalar_from_function
     call_julienne_assert(x_max .greaterThan. x_min)
     call_julienne_assert(cells .isAtLeast. 2*order)
@@ -32,8 +38,14 @@ contains
     end associate
     scalar_1D%gradient_operator_1D_ = gradient_operator_1D_t(k=order, dx=(x_max - x_min)/cells, cells=cells)
   end procedure
-
+  ! END CODE CHUNK
 #else
+
+  ! PURPOSE: Definition of procedure to construct a new scalar_1D_t object by assigning each argument to a corresponding
+  !          corresponding component of the new object.
+  ! KEYWORDS: 1D scalar field constructor
+  ! CONTEXT: Invoke this constructor with a pointer associated with a function to be sampled at a set
+  !          of uniformly-spaced cell centers along one spatial dimension bounded by x_min and x_max.
 
   pure module function construct_1D_scalar_from_function(initializer, order, cells, x_min, x_max) result(scalar_1D)
     procedure(scalar_1D_initializer_i), pointer :: initializer
@@ -51,6 +63,7 @@ contains
     end associate
     scalar_1D%gradient_operator_1D_ = gradient_operator_1D_t(k=order, dx=(x_max - x_min)/cells, cells=cells)
   end function
+  ! END CODE CHUNK
 
   pure function cell_center_locations(x_min, x_max, cells) result(x)
     double precision, intent(in) :: x_min, x_max
@@ -64,6 +77,10 @@ contains
   end function
 
 #endif
+
+  ! PURPOSE: Definition of procedure to compute mimetic approximations to the gradient of scalar fields.
+  ! KEYWORDS: gradient, differential operator
+  ! CONTEXT: Invoke this function via the unary .grad. operator with a right-hand-side, scalar-field operand.
 
   module procedure grad
 
@@ -81,6 +98,11 @@ contains
     end associate
 
   end procedure
+  ! END CODE CHUNK
+
+  ! PURPOSE: Definition of procedure to compute mimetic approximations to the Laplacian of a scalar field.
+  ! KEYWORDS: Laplacian, differential operator
+  ! CONTEXT: Invoke this function via the unary .laplacian. operator with a right-hand-side, scalar-field operand.
 
   module procedure laplacian
 
@@ -95,10 +117,16 @@ contains
     end associate
 
   end procedure
+  ! END CODE CHUNK
+
+  ! PURPOSE: Definition of procedure to provide the cell-centered values of scalar quantities.
+  ! KEYWORDS: cell centers, staggered grid, scalar field
+  ! CONTEXT: Invoke this function via the "values" generic binding to produce discrete scalar values.
 
   module procedure scalar_1D_values
     cell_centers_extended_values = self%values_
   end procedure
+  ! END CODE CHUNK
 
   pure function scalar_1D_grid_locations(x_min, x_max, cells) result(x)
     double precision, intent(in) :: x_min, x_max
@@ -111,8 +139,14 @@ contains
     end associate
   end function
 
+  ! PURPOSE: Definition of procedure to provide the staggered-grid locations at which scalar values are stored: cell centers plus domain boundaries.
+  ! KEYWORDS: staggered grid, scalar field, cell centers
+  ! CONTEXT: Invoke this function via the "grid" generic binding to produce discrete scalar locations for
+  !          initialization-function sampling, printing, or plotting.
+
   module procedure scalar_1D_grid
     cell_centers_extended  = scalar_1D_grid_locations(self%x_min_, self%x_max_, self%cells_)
   end procedure
+  ! END CODE CHUNK
 
 end submodule scalar_1D_s

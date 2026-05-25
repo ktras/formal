@@ -36,7 +36,11 @@ contains
   end function
 
 #endif
- 
+
+  ! PURPOSE: Definition of procedure to construct a new mimetic gradient-operator matrix representation of kth order for 1D cells of width dx.
+  ! KEYWORDS: 1D, gradient-operator constructor, sparse matrix
+  ! CONTEXT: Use this function to construct a sparse-matrix represntation of a mimetic gradient operator.
+
   module procedure construct_1D_gradient_operator
 
     call_julienne_assert(cells .isAtLeast. 2*k)
@@ -92,6 +96,7 @@ contains
     end function
 
   end procedure construct_1D_gradient_operator
+  ! END CODE CHUNK
 
   module procedure gradient_matrix_multiply
 

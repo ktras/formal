@@ -36,6 +36,10 @@ contains
 
 #endif
  
+  ! PURPOSE: Definition of procedure to construct an object representing a 1D mimetic divergence operator.
+  ! KEYWORDS: 1D, divergence operator, sparse matrix, constructor
+  ! CONTEXT: Use this type to assemble a divergence-operator matrix for printing.
+
   module procedure construct_1D_divergence_operator
 
     double precision, allocatable :: Ap(:,:)
@@ -100,6 +104,7 @@ contains
     end function
 
   end procedure construct_1D_divergence_operator
+  ! END CODE CHUNK
 
   module procedure submatrix_A_rows
     call_julienne_assert(allocated(self%upper_))

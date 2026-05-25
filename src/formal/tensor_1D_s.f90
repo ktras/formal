@@ -5,6 +5,11 @@ submodule(tensors_1D_m) tensor_1D_s
   implicit none
 contains
 
+  ! PURPOSE: Definition of procedure to construct a new tensor_1D_t object by assigning each argument to a corresponding
+  !          corresponding component of the new object.
+  ! KEYWORDS: 1D tensor constructor
+  ! CONTEXT: Constructors for child types assign this function's result to to the child object's parent component.
+
   module procedure construct_1D_tensor_from_components
     tensor_1D%values_ = values
     tensor_1D%x_min_  = x_min
@@ -12,10 +17,15 @@ contains
     tensor_1D%cells_  = cells 
     tensor_1D%order_  = order
   end procedure
+  ! END CODE CHUNK
+
+  ! PURPOSE: Definition of procedure to provide a uniform cell width along the x-coordinate spatial direction.
+  ! KEYWORDS: abcissa, mesh spacing
+  ! CONTEXT: Use this function to produce cell widths for uniform 1D meshes.
 
   module procedure dx
     dx = (self%x_max_ - self%x_min_)/self%cells_
   end procedure
-
+  ! END CODE CHUNK
 
 end submodule tensor_1D_s
