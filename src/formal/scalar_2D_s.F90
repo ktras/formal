@@ -10,7 +10,7 @@ submodule(tensors_2D_m) scalar_2D_s
     ,operator(.equalsExpected.) &
     ,operator(.greaterThan.) &
     ,operator(.isAtLeast.)
-  use tensors_1D_m, only : cell_centers_extended_1D, scalar_1D_t
+  use tensors_1D_m, only : divergence_1D_t, cell_centers_extended_1D, scalar_1D_t, vector_1D_t, laplacian_1D_t
   use julienne_m, only : string_t, operator(.csv.)
   implicit none
 

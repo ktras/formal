@@ -16,7 +16,7 @@ submodule(tensors_1D_m) scalar_1D_s
    ,operator(.greaterThan.) &
    ,operator(.within.) &
    ,string_t
-  use interpolator_1D_m, only : faces_to_centers_1d_t
+  use interpolator_1D_m
   implicit none
 
 contains
